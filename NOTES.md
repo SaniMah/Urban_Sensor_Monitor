@@ -133,3 +133,32 @@ choice, not scored here, since "unusual but real" has no crisp ground truth.)
 
 **Next (Step 6):** Streamlit + map dashboard — fleet overview, a map of sensor
 health, per-sensor drill-down, and a downloadable issues table.
+
+---
+
+## Step 6 — Dashboard with health map (13 Nov 2026)
+
+**`app/dashboard.py` — reads from PostgreSQL, three tabs:**
+- **Fleet overview** — metric cards (sensors, reporting, flagged, total issues)
+  and a **geographic health map** (pydeck `ScatterplotLayer` over a Carto
+  basemap): every sensor at its real lat/long, coloured green (healthy) / red
+  (has issues) / grey (no data in window), radius by issue count. Plus an
+  issues-by-type bar chart.
+- **Sensor drill-down** — pick a sensor; see its hourly time series with
+  **outages shaded red and flat-lines orange**, and headline metrics.
+- **Issues table** — all anomalies, filterable by type, with CSV/Excel download.
+
+Caching (`st.cache_data` / `st.cache_resource`) keeps it responsive.
+
+**Verified live in the browser:** 134 sensors / 100 reporting / 99 flagged /
+5,759 issues; the map plots the CBD sensor cluster correctly; the drill-down
+shades a sensor's outages. The map is the geographic view the CAN project could
+not have — a natural fit for city sensor data.
+
+**Launch gotcha (noted):** both this project and CanLog named their launch
+config "dashboard", which collided; renamed this one `factory-pulse-dashboard`
+on port 8502. Run: `streamlit run app/dashboard.py`.
+
+**Next (Step 7):** the AI weekly health report — summarise the week's anomalies
+to JSON and have a local/offline LLM write a plain-English report for council
+staff, from the numbers only.
