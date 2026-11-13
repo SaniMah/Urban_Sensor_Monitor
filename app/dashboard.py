@@ -20,6 +20,7 @@ from sqlalchemy import text
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.db import get_engine  # noqa: E402
+from src.report import generate_report  # noqa: E402
 
 st.set_page_config(page_title="Factory Pulse", page_icon="📡", layout="wide")
 
@@ -102,8 +103,8 @@ if health.empty:
     st.warning("No data loaded. Run `python run_step2.py` and `run_step4.py` first.")
     st.stop()
 
-tab_overview, tab_drill, tab_table = st.tabs(
-    ["Fleet overview", "Sensor drill-down", "Issues table"]
+tab_overview, tab_drill, tab_table, tab_report = st.tabs(
+    ["Fleet overview", "Sensor drill-down", "Issues table", "Weekly report"]
 )
 
 # --------------------------------------------------------------------------- #
@@ -195,3 +196,24 @@ with tab_table:
                        file_name="factory_pulse_issues.xlsx",
                        mime="application/vnd.openxmlformats-officedocument."
                             "spreadsheetml.sheet")
+
+# --------------------------------------------------------------------------- #
+# Weekly AI report
+# --------------------------------------------------------------------------- #
+with tab_report:
+    st.subheader("Weekly health report for council staff")
+    st.caption("Uses a local LLM (Ollama) if running, otherwise a built-in "
+               "template. Either way it uses only the computed numbers and is a "
+               "draft to review before use.")
+    days = st.slider("Report window (days)", 3, 28, 7)
+    if st.button("Generate weekly report", type="primary"):
+        with st.spinner("Writing report..."):
+            report_md, source = generate_report(engine(), days=days)
+        if source == "template-fallback":
+            st.info("Ollama not detected — used the built-in template. Install "
+                    "Ollama and run `ollama pull llama3.2` for LLM-written prose.")
+        else:
+            st.success(f"Written by local model ({source}).")
+        st.markdown(report_md)
+        st.download_button("⬇ Download report (Markdown)", report_md.encode(),
+                           file_name=f"weekly_report_{days}d.md", mime="text/markdown")

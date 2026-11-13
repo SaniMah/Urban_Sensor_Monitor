@@ -162,3 +162,38 @@ on port 8502. Run: `streamlit run app/dashboard.py`.
 **Next (Step 7):** the AI weekly health report — summarise the week's anomalies
 to JSON and have a local/offline LLM write a plain-English report for council
 staff, from the numbers only.
+
+---
+
+## Step 7 — AI weekly report (13 Nov 2026)
+
+**Goal:** a plain-English weekly health report for council staff, written by a
+**local** LLM from the numbers only (no cloud, no key) — same design as CanLog.
+
+**`src/report.py`:**
+1. `gather_facts(days=7)` — queries the DB for the last 7 days of data: fleet
+   summary (sensors, reporting, flagged), issues by type, the 5 sensors with the
+   most issues (with their outage/flat-line/off-baseline breakdown), and the
+   single longest outage. Numbers only.
+2. `build_prompt` — tells the model to use **only** those numbers, write for a
+   non-technical reader, start with the DRAFT banner, and fill Summary / Sensors
+   needing attention / Issue breakdown / Recommended next checks.
+3. `generate_with_ollama` + a 2-second `ollama_available()` health-check so it
+   never hangs when Ollama is absent.
+4. `render_fallback` — a deterministic template producing the same report from
+   the same facts, so a useful draft is always produced.
+
+**Where it runs:** `run_step7.py` (CLI → `reports/weekly_report_7d.md`) and a
+**Weekly report** tab in the dashboard (day-window slider + Generate button +
+download). Verified in the browser.
+
+**Sample output (7 days):** 99 of 134 sensors reporting, 63 flagged, 221 issues;
+longest outage 21 h at Southern Cross (sensor 135); top offenders named with
+their issue mix. Reads like a report a maintenance team could act on.
+
+**Why local + numbers-only:** no cost, data stays on the machine, and feeding
+the model only pre-computed numbers means it can't invent measurements. Marked a
+draft.
+
+**Next (Step 8):** pytest for the detection/baseline logic, and the README as a
+consulting case.
