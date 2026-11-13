@@ -1,0 +1,39 @@
+# Factory Pulse — Python dependencies
+# Install into a virtual environment:
+#   python -m venv .venv
+#   .venv\Scripts\Activate.ps1        (Windows PowerShell)
+#   pip install -r requirements.txt
+
+# --- Core data handling ---
+pandas
+numpy
+
+# --- Database (PostgreSQL via SQLAlchemy) ---
+SQLAlchemy
+psycopg2-binary          # PostgreSQL driver
+python-dotenv            # loads DATABASE_URL / tokens from .env
+
+# --- Data source (City of Melbourne Socrata API) ---
+requests
+
+# --- Dashboard + map ---
+streamlit
+pydeck                   # map of sensor locations
+
+# --- Charts / export ---
+matplotlib
+openpyxl                 # Excel export
+
+# --- Notebooks ---
+jupyter
+ipykernel
+
+# --- Testing ---
+pytest
+
+# --- LLM API (weekly report) ---
+anthropic
+
+# --- Optional / only if ahead of schedule ---
+# scikit-learn           # anomaly models beyond the rules
+# sodapy                 # convenience client for the Socrata API
