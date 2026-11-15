@@ -94,7 +94,19 @@ def build_prompt(facts: dict) -> str:
     return (
         "You are writing a weekly sensor-health report for City of Melbourne "
         "staff who maintain the pedestrian-counting sensors. Use ONLY the numbers "
-        "in the JSON below; invent nothing. Write for a non-technical reader.\n\n"
+        "in the JSON below; invent nothing, and do not add numbers together.\n\n"
+        "What the fields mean (do not confuse them):\n"
+        "- fleet.sensors = total sensors in the network.\n"
+        "- fleet.reporting = how many sent any data this period.\n"
+        "- fleet.flagged = how many had at least one health issue "
+        "(this is the count 'needing attention', NOT fleet.sensors).\n"
+        "- issues.total / issues.by_type = number of issues, not sensors.\n"
+        "- attention = the specific sensors to name in 'Sensors needing attention'; "
+        "use these names and their per-sensor counts, nothing else.\n"
+        "- worst_outage = the single longest outage; mention it in the Summary.\n\n"
+        "Write in complete, flowing sentences for a human reader. NEVER print the "
+        "JSON field names (like 'fleet.sensors' or 'issues.by_type') in your "
+        "report — translate every number into plain English.\n\n"
         f"Begin with the line: {DRAFT_BANNER}\n"
         "Then these sections as headings: Summary, Sensors needing attention, "
         "Issue breakdown, Recommended next checks.\n\n"
@@ -110,7 +122,9 @@ def ollama_available(timeout: float = 2.0) -> bool:
         return False
 
 
-def generate_with_ollama(prompt: str, model: str = DEFAULT_MODEL, timeout: int = 120) -> str:
+# 300s so the first call after boot survives the one-off cold model load
+# (~60s) plus generation; once warm a report takes only a few seconds.
+def generate_with_ollama(prompt: str, model: str = DEFAULT_MODEL, timeout: int = 300) -> str:
     body = json.dumps({"model": model, "prompt": prompt, "stream": False}).encode()
     req = urllib.request.Request(OLLAMA_URL, data=body,
                                  headers={"Content-Type": "application/json"})

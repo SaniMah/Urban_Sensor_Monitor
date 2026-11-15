@@ -1,26 +1,18 @@
-# Weekly Sensor-Health Report — DRAFT - review before use
+DRAFT - review before use
 
-**Period:** 2026-11-03 03:00:00 to 2026-11-10 03:00:00 (7 days)
+Summary
+The pedestrian-counting sensor network experienced a total of 221 issues during the reporting period, with 63 sensors requiring attention due to health issues. The single longest outage lasted for 21 hours, affecting sensors at the I-Hub Southern Cross Station - Bourke Street Entrance - South location.
 
-## Summary
-Of 134 sensors, 99 reported data this period and 63 had at least one health issue. 221 issues were detected in total (outage: 125, off_baseline: 96).
+Sensors needing attention
+The following sensors require attention:
+- 188 RMIT Building 51 - 80-92 Victoria Street: 14 issues, 8 outages
+- 140 COM Pole 2837 - Boyd Park: 11 issues, 8 outages
+- 37 Lygon St (East): 9 issues, 8 outages
+- 123 Birrarung Marr East - Batman Ave Bridge Entry: 9 issues, 9 outages
+- 124 Birrarung Marr East - Batman Ave Bridge Entry: 8 issues, 8 outages
 
-The longest outage was **21 hours** at I-Hub Southern Cross Station - Bourke Street Entrance - South (sensor 135), from 2026-11-08 17:00:00.
+Issue breakdown
+There were 125 sensors experiencing outages, 96 sensors off baseline, and 221 issues in total. The breakdown by issue type shows that 125 outages occurred, while 96 were off baseline.
 
-## Sensors needing attention
-- **RMIT Building 51 - 80-92 Victoria Street** (sensor 188): 14 issues — 8 outage(s), 6 off-baseline.
-- **COM Pole 2837 - Boyd Park** (sensor 140): 11 issues — 8 outage(s), 3 off-baseline.
-- **Lygon St (East)** (sensor 37): 9 issues — 8 outage(s), 1 off-baseline.
-- **Birrarung Marr East - Batman Ave Bridge Entry** (sensor 123): 9 issues — 9 outage(s).
-- **Birrarung Marr East - Batman Ave Bridge Entry** (sensor 124): 8 issues — 8 outage(s).
-
-## Issue breakdown
-- outage: 125
-- off_baseline: 96
-
-## Recommended next checks
-- Prioritise sensors with outages — check power and data connectivity.
-- Inspect flat-lined sensors on site; a repeating value usually means a stuck or faulty unit.
-- Review off-baseline sensors against known events (works, weather, closures) before assuming a fault.
-
-_Generated from computed values only. DRAFT - review before use._
+Recommended next checks
+The 63 sensors requiring attention should be inspected and addressed to ensure the health of the sensor network. The single longest outage, lasting 21 hours, should also be investigated to determine the cause and take corrective action to prevent similar outages in the future.
