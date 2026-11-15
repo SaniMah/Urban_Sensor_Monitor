@@ -1,0 +1,5 @@
+# Factory Pulse API — in addition to the project root requirements.txt
+# (which already provides pandas, SQLAlchemy, psycopg2, openpyxl, requests).
+fastapi==0.116.1
+starlette==0.47.2        # pinned so it also satisfies Streamlit (>=0.46)
+uvicorn[standard]==0.34.0
