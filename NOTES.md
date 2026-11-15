@@ -197,3 +197,35 @@ draft.
 
 **Next (Step 8):** pytest for the detection/baseline logic, and the README as a
 consulting case.
+
+---
+
+## Step 8 — Tests & README (14 Nov 2026)
+
+**Tests (`tests/`, 13 passing, no database):** all on small synthetic
+DataFrames, so they run anywhere / in CI. `conftest.py` puts the project root on
+`sys.path`.
+- `test_detect.py` — clean data fires nothing; each rule fires on its own
+  injected issue (duplicate, impossible, flat-line, outage, off-baseline); a
+  repeated **zero** is NOT flagged as a flat-line (night quiet is normal); empty
+  input does not crash.
+- `test_profile.py` — the baseline is the median per (sensor, weekday, hour),
+  and different hours become different rows.
+- `test_evaluate.py` — the synthetic clean data is gap-free; injected issues are
+  recovered at precision/recall 1.00; the scorer counts TP/FP/FN correctly.
+
+Run with `pytest -q`. (Also fixed a pandas deprecation: `dayofweek` →
+`day_of_week` in the synthetic generator.)
+
+**README:** written as a consulting case — problem, who it's for, what it does,
+**real findings** (4,092 outages incl. a 167-hour one; the precision/recall
+table), tech/schema, how to run, testing, honest limitations, data & licence,
+and the AI-assistance note. Embeds the seasonal-profile figure.
+
+**Status:** Factory Pulse is feature-complete and submission-ready — it mirrors
+the CAN Log Analyser method (ingest → DB → baseline → detection → evaluation →
+dashboard → AI report) on a different, geographic dataset, which is the point:
+one repeatable approach, two domains.
+
+**Remaining (optional):** deploy the dashboard to Streamlit Community Cloud,
+screenshots + a short demo recording.

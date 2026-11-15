@@ -24,7 +24,7 @@ def make_clean(location_ids=(1001, 1002, 1003), days=21, seed=0,
     for i, loc in enumerate(location_ids):
         scale = 1.0 + 0.5 * i
         for ts in hours:
-            base = _SHAPE[ts.hour] * scale * (0.8 if ts.dayofweek >= 5 else 1.0)
+            base = _SHAPE[ts.hour] * scale * (0.8 if ts.day_of_week >= 5 else 1.0)
             val = max(0, int(round(base + rng.normal(0, base * 0.08 + 1))))
             rows.append((loc, ts, ts.hour, val))
     return pd.DataFrame(rows, columns=["location_id", "timestamp", "hourday",
