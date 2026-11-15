@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Factory Pulse — Fleet Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<!-- viewport corner frame -->
+<div class="frame tl"></div><div class="frame tr"></div>
+<div class="frame bl"></div><div class="frame br"></div>
+
+<div class="console">
+
+  <!-- ===== top bar ===== -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">◣</span>
+      <span class="word">FACTORY&nbsp;PULSE</span>
+      <span class="idx">FP·01</span>
+    </div>
+    <div class="status-pill">
+      <span class="pdot"></span><span id="pill">FLEET STATUS // MONITORING</span>
+    </div>
+    <div class="clock">
+      <div id="coord">−37.8136°  144.9631°</div>
+      <div id="clock">--:--:-- LOCAL</div>
+    </div>
+  </header>
+
+  <!-- ===== main grid ===== -->
+  <main class="grid">
+
+    <!-- left: fleet readout -->
+    <section class="col left">
+      <div class="label-row"><span class="br-l">[</span> FLEET READOUT <span class="br-r">]</span></div>
+      <div id="readout" class="readout"></div>
+      <div class="label-row sub"><span class="br-l">[</span> ISSUE CLASSES <span class="br-r">]</span></div>
+      <div id="classes" class="classes"></div>
+    </section>
+
+    <!-- center: schematic hero -->
+    <section class="col hero">
+      <div class="hero-head">
+        <span class="h-title">GEOGRAPHIC HEALTH SCHEMATIC</span>
+        <span class="h-sub">MELBOURNE CBD · PEDESTRIAN SENSOR GRID</span>
+      </div>
+      <div id="plot" class="plot">
+        <svg id="svg" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <div class="hero-foot">
+        <span>NODES <b id="n-nodes">—</b></span>
+        <span class="ok">● NOMINAL <b id="n-ok">—</b></span>
+        <span class="fault">● FAULT <b id="n-fault">—</b></span>
+        <span class="dim">● NO SIGNAL <b id="n-nd">—</b></span>
+      </div>
+    </section>
+
+    <!-- right: top faults -->
+    <section class="col right">
+      <div class="label-row"><span class="br-l">[</span> PRIORITY FAULTS <span class="br-r">]</span></div>
+      <div id="faults" class="faults"></div>
+    </section>
+  </main>
+
+  <!-- ===== bottom caption strip ===== -->
+  <footer class="caption">
+    <div class="cap-box">
+      <div class="cap-title"><span class="br-l">[</span> SYSTEM // FACTORY PULSE <span class="br-r">]</span></div>
+      <p id="cap-text">Sensor-fleet health monitor. Learns each sensor's normal pattern
+        and flags outages, flat-lines, impossible values and off-baseline drift
+        across the City of Melbourne pedestrian network.</p>
+    </div>
+    <div class="cap-worst" id="worst"></div>
+    <div class="cap-meta">
+      <div>SRC · POSTGRES / NEON</div>
+      <div id="gen">SNAPSHOT · —</div>
+      <div class="rev">REV 1 — DRAFT</div>
+    </div>
+  </footer>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

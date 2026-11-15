@@ -1,0 +1,15 @@
+# Factory Pulse — dark "HUD / instrument panel" theme.
+# Colour + font fine-tuning is done in app/dashboard.py (injected CSS); this
+# sets the base so Streamlit's own widgets (dataframe, slider, inputs) match.
+[theme]
+base = "dark"
+primaryColor = "#e8930c"              # signal amber (used sparingly)
+backgroundColor = "#0a0a0c"           # warm ink
+secondaryBackgroundColor = "#121214"  # surface
+textColor = "#e8e3d6"                 # warm bone
+font = "monospace"
+baseRadius = "none"                   # sharp corners = instrument-panel feel
+borderColor = "#242428"
+
+[server]
+headless = true

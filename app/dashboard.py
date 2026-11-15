@@ -12,6 +12,7 @@ import sys
 from io import BytesIO
 from pathlib import Path
 
+import altair as alt
 import matplotlib.pyplot as plt
 import pandas as pd
 import pydeck as pdk
@@ -23,6 +24,97 @@ from src.db import get_engine  # noqa: E402
 from src.report import generate_report  # noqa: E402
 
 st.set_page_config(page_title="Factory Pulse", page_icon="📡", layout="wide")
+
+# --------------------------------------------------------------------------- #
+# Theme — "sodium instrument": warm ink + bone, a single restrained amber
+# signal, flat (no glow), fine hairlines, editorial section indexing. Kept in
+# one place so the Python below stays about data, not styling.
+# --------------------------------------------------------------------------- #
+HUD_CSS = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --bg:#0a0a0c; --surface:#121214; --surface-2:#161618;
+  --line:#242428; --line-2:#34343a; --ink:#e8e3d6; --muted:#857f70;
+  --amber:#e8930c; --amber-soft:#c9850f; --fault:#d8453f; --live:#b7c08a;
+  --mono:'Space Mono',ui-monospace,monospace; --display:'Space Grotesk',sans-serif;
+}
+
+/* body: warm ink, very fine ruled grid */
+.stApp{
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+  background-size:30px 30px;
+}
+.stApp, .stApp p, .stApp li, .stApp span{font-family:var(--display);color:var(--ink);}
+[data-testid="stHeader"]{background:transparent;}
+.block-container{padding-top:1.4rem;max-width:1360px;}
+
+/* ---- header: editorial masthead, one corner mark ---- */
+.hud-header{
+  position:relative;display:flex;justify-content:space-between;align-items:flex-end;
+  flex-wrap:wrap;gap:14px;border-top:1px solid var(--line-2);
+  border-bottom:1px solid var(--line-2);padding:18px 2px 14px;margin-bottom:22px;
+}
+.hud-brand{font-family:var(--display);font-weight:600;font-size:2.15rem;letter-spacing:-.015em;
+  color:var(--ink);line-height:.95;}
+.hud-brand .reg{font-size:.9rem;vertical-align:super;color:var(--amber);font-weight:400;
+  letter-spacing:0;margin-left:4px;}
+.hud-sub{font-family:var(--mono);font-size:.68rem;letter-spacing:.26em;color:var(--muted);
+  text-transform:uppercase;margin-top:9px;}
+.hud-right{text-align:right;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;line-height:1.7;}
+.hud-right .code{color:var(--ink);}
+.hud-live{color:var(--ink);display:flex;gap:7px;align-items:center;justify-content:flex-end;}
+.hud-dot{width:6px;height:6px;border-radius:50%;background:var(--live);}
+
+/* ---- section headings: "01 — TITLE" with a hairline rule ---- */
+.stApp h2,.stApp h3{font-family:var(--display);font-weight:500;letter-spacing:.01em;
+  text-transform:none;font-size:1.02rem;color:var(--ink);
+  display:flex;align-items:center;gap:14px;margin-top:6px;}
+.stApp h2::after,.stApp h3::after{content:"";flex:1;height:1px;background:var(--line);}
+[data-testid="stCaptionContainer"],.stCaption{font-family:var(--mono);letter-spacing:.02em;
+  color:var(--muted);font-size:.72rem;}
+
+/* ---- metric cards: flat readout, hairline top rule, no ticks/no glow ---- */
+[data-testid="stMetric"]{
+  position:relative;background:var(--surface);border:1px solid var(--line);
+  border-top:2px solid var(--line-2);padding:16px 18px 14px;
+}
+[data-testid="stMetricLabel"]{font-family:var(--mono);text-transform:uppercase;
+  letter-spacing:.16em;color:var(--muted);font-size:.64rem;}
+[data-testid="stMetricValue"]{font-family:var(--display);color:var(--ink);
+  font-weight:600;letter-spacing:-.02em;font-size:2.3rem;}
+
+/* ---- tabs: quiet, letter-spaced, amber active rule ---- */
+[data-baseweb="tab-list"]{gap:4px;border-bottom:1px solid var(--line);}
+[data-baseweb="tab"]{font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;
+  font-size:.68rem;color:var(--muted);background:transparent;padding:9px 14px;}
+[data-baseweb="tab"]:hover{color:var(--ink);}
+[data-baseweb="tab"][aria-selected="true"]{color:var(--ink);
+  border-bottom:2px solid var(--amber);background:transparent;}
+
+/* ---- buttons: flat, hairline, amber only on primary ---- */
+.stButton>button,[data-testid="stDownloadButton"] button{
+  font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;font-size:.72rem;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink);border-radius:0;}
+.stButton>button:hover,[data-testid="stDownloadButton"] button:hover{
+  border-color:var(--ink);background:var(--surface-2);color:var(--ink);}
+.stButton>button[kind="primary"]{background:var(--amber);color:#1a1205;
+  border-color:var(--amber);font-weight:700;}
+.stButton>button[kind="primary"]:hover{background:var(--amber-soft);color:#1a1205;}
+
+/* widgets + dataframe trim */
+[data-testid="stDataFrame"]{border:1px solid var(--line);}
+label p{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;
+  font-size:.7rem;color:var(--muted);}
+hr{border-color:var(--line);}
+</style>
+"""
+st.markdown(HUD_CSS, unsafe_allow_html=True)
 
 
 # --------------------------------------------------------------------------- #
@@ -85,18 +177,31 @@ def to_excel_bytes(df: pd.DataFrame) -> bytes:
 
 def health_color(n_anomalies: int, n_readings: int):
     if n_readings == 0:
-        return [150, 150, 150, 140]        # grey = no data in window
+        return [78, 78, 86, 140]           # dim slate = no data in window
     if n_anomalies == 0:
-        return [38, 166, 91, 160]          # green = healthy
-    return [208, 0, 0, 200]                # red = flagged
+        return [167, 176, 106, 180]        # sage = healthy
+    return [216, 69, 63, 225]              # red = flagged
 
 
 # --------------------------------------------------------------------------- #
-# Header
+# Header (custom HUD top bar)
 # --------------------------------------------------------------------------- #
-st.title("📡 Factory Pulse")
-st.caption("Sensor-fleet health monitoring — City of Melbourne Pedestrian "
-           "Counting System.")
+st.markdown(
+    """
+    <div class="hud-header">
+      <div class="hud-left">
+        <div class="hud-brand">Factory Pulse<span class="reg">®</span></div>
+        <div class="hud-sub">Sensor-fleet health monitor &nbsp;·&nbsp; Melbourne pedestrian network</div>
+      </div>
+      <div class="hud-right">
+        <div><span class="code">37.8136°S&nbsp;&nbsp;144.9631°E</span></div>
+        <div><span class="code">FP·01</span> &nbsp;/&nbsp; Pedestrian Counting System</div>
+        <div class="hud-live"><span class="hud-dot"></span>Live &nbsp;·&nbsp; Postgres</div>
+      </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 health = sensor_health()
 if health.empty:
@@ -136,12 +241,28 @@ with tab_overview:
     st.pydeck_chart(pdk.Deck(
         layers=[layer], initial_view_state=view,
         tooltip={"text": "{description}\nIssues: {n_anomalies}"},
-        map_style="light",
+        map_style="dark",
     ))
 
     if not by_type.empty:
         st.subheader("Issues by type")
-        st.bar_chart(by_type.set_index("anomaly_type")["n"])
+        chart = (
+            alt.Chart(by_type)
+            .mark_bar(color="#e8930c", height=16)
+            .encode(
+                x=alt.X("n:Q", title="count"),
+                y=alt.Y("anomaly_type:N", sort="-x", title=None),
+                tooltip=["anomaly_type", "n"],
+            )
+            .properties(height=max(120, 40 * len(by_type)))
+            .configure_view(stroke=None, fill="#121214")
+            .configure_axis(
+                labelColor="#857f70", titleColor="#857f70", labelFont="Space Mono",
+                titleFont="Space Mono", labelFontSize=11, domainColor="#34343a",
+                gridColor="#1b1b1e", tickColor="#34343a",
+            )
+        )
+        st.altair_chart(chart, use_container_width=True, theme=None)
 
 # --------------------------------------------------------------------------- #
 # Sensor drill-down
@@ -164,14 +285,21 @@ with tab_drill:
     m3.metric("Worst outage (h)", int(outages["value"].max()) if not outages.empty else 0)
 
     fig, ax = plt.subplots(figsize=(11, 4))
-    ax.plot(r["ts"], r["pedestrian_count"], lw=0.6, color="#2a6f97")
+    fig.patch.set_facecolor("#121214")
+    ax.set_facecolor("#0e0e10")
+    ax.plot(r["ts"], r["pedestrian_count"], lw=0.7, color="#d7d0bf")
     for row in outages.itertuples():
-        ax.axvspan(row.start_ts, row.end_ts, color="#d00000", alpha=0.25)
+        ax.axvspan(row.start_ts, row.end_ts, color="#d8453f", alpha=0.30)
     for row in a[a["anomaly_type"] == "flat_line"].itertuples():
-        ax.axvspan(row.start_ts, row.end_ts, color="#f48c06", alpha=0.4)
-    ax.set_xlabel("time")
-    ax.set_ylabel("pedestrians / hour")
-    ax.set_title(f"Sensor {loc} — hourly counts (red = outage, orange = flat-line)")
+        ax.axvspan(row.start_ts, row.end_ts, color="#e8930c", alpha=0.45)
+    ax.set_xlabel("time", color="#857f70", fontfamily="monospace", fontsize=9)
+    ax.set_ylabel("pedestrians / hour", color="#857f70", fontfamily="monospace", fontsize=9)
+    ax.set_title(f"sensor {loc}  —  hourly counts   (red = outage · amber = flat-line)",
+                 color="#e8e3d6", fontfamily="monospace", fontsize=10, loc="left", pad=12)
+    ax.tick_params(colors="#857f70", labelsize=8)
+    for spine in ax.spines.values():
+        spine.set_color("#34343a")
+    ax.grid(True, color="#1b1b1e", lw=0.6)
     fig.tight_layout()
     st.pyplot(fig)
 
