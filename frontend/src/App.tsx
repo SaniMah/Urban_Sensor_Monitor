@@ -60,7 +60,7 @@ export default function App() {
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}>
             {screen === 'observatory' && <Observatory onInspect={inspect} />}
             {screen === 'sensor' && <SensorIntelligence sensorId={activeSensor} />}
-            {screen === 'incidents' && <Incidents />}
+            {screen === 'incidents' && <Incidents onInspect={inspect} />}
             {screen === 'reports' && <Reports />}
           </motion.div>
         </AnimatePresence>
