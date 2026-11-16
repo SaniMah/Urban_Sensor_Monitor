@@ -36,8 +36,14 @@ export function SensorMap({ sensors, selectedId, detail, onSelect }: Props) {
     const m = L.map(box.current, {
       zoomControl: false, attributionControl: false, preferCanvas: true,
     }).setView(MELB, 13)
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-      { subdomains: 'abcd', maxZoom: 20 }).addTo(m)
+    // Esri Dark Gray Canvas — free, no API key, genuinely dark.
+    const esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas'
+    L.tileLayer(`${esri}/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}`, {
+      maxZoom: 16, attribution: '© Esri',
+    }).addTo(m)
+    L.tileLayer(`${esri}/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, {
+      maxZoom: 16, attribution: '',
+    }).addTo(m)
     L.control.zoom({ position: 'bottomright' }).addTo(m)
     layer.current = L.layerGroup().addTo(m)
     m.on('click', () => onSelectRef.current(null))
