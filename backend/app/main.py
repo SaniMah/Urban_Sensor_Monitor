@@ -1,4 +1,4 @@
-"""Factory Pulse API — FastAPI over the existing analytical core (src/).
+"""Factory Pulse API - FastAPI over the existing analytical core (src/).
 
 Run (from project root):
     uvicorn backend.app.main:app --reload --port 8000
@@ -24,6 +24,7 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -121,3 +122,13 @@ def report(req: ReportReq):
     text_md, source = generate_report(engine(), days=req.days)
     return {"report": text_md, "source": source,
             "is_llm": not source.startswith("template")}
+
+
+# --------------------------------------------------------------------------- #
+# Serve the built frontend (single-service deploy). Mounted last so every /api
+# route above still wins; html=True serves index.html for the SPA. Skipped in
+# local dev where the frontend runs on Vite, so only mount if the build exists.
+# --------------------------------------------------------------------------- #
+_dist = ROOT / "frontend" / "dist"
+if _dist.is_dir():
+    app.mount("/", StaticFiles(directory=str(_dist), html=True), name="spa")

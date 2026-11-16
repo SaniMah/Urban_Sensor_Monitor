@@ -1,7 +1,7 @@
 """Export a JSON snapshot of the current fleet state for the bespoke web UI.
 
 Reads the same Postgres the Streamlit app uses and writes web/data/snapshot.json
-(and inlines nothing) — the static front-end consumes this file. Re-run it to
+(and inlines nothing) - the static front-end consumes this file. Re-run it to
 refresh the numbers; later this becomes the single endpoint the deployed site
 hits.
 

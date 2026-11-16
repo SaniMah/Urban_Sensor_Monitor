@@ -1,0 +1,14 @@
+**/node_modules
+**/.venv
+**/__pycache__
+**/*.pyc
+.git
+.github
+data
+reports
+notebooks
+web
+.streamlit
+frontend/dist
+**/.env
+*.md

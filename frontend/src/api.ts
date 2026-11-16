@@ -3,7 +3,7 @@ import type { FleetSummary, Sensor, SensorDetail, IssueRecord } from './types'
 
 async function get<T>(path: string): Promise<T> {
   const r = await fetch(path)
-  if (!r.ok) throw new Error(`${r.status} ${r.statusText} — ${path}`)
+  if (!r.ok) throw new Error(`${r.status} ${r.statusText} - ${path}`)
   return r.json() as Promise<T>
 }
 
@@ -36,7 +36,7 @@ export const api = {
     }).then((r) => r.json() as Promise<{ report: string; source: string; is_llm: boolean }>),
 }
 
-// status → design-system colour
+// map a status to its colour
 export const STATUS_COLOR: Record<string, string> = {
   ok: '#8ea96a',
   fault: '#e0473f',

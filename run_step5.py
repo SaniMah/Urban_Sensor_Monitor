@@ -1,4 +1,4 @@
-"""Step 5 — evaluation.
+"""Step 5 - evaluation.
 
 Inject known health issues into a clean synthetic dataset, run the detectors,
 and report precision / recall for each issue type.

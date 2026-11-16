@@ -1,0 +1,12 @@
+# Render.com blueprint: one Docker web service that builds the frontend and
+# runs the API serving it. DATABASE_URL is supplied as a dashboard env var.
+services:
+  - type: web
+    name: factory-pulse
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false        # secret, supplied at deploy time (not committed)

@@ -1,4 +1,4 @@
-// Shared API types — mirror the FastAPI responses in backend/app.
+// Shared API types. Mirror the FastAPI responses in backend/app.
 
 export type Status = 'ok' | 'fault' | 'nodata'
 

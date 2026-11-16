@@ -1,4 +1,4 @@
-"""Factory Pulse — Streamlit dashboard.
+"""Factory Pulse - Streamlit dashboard.
 
 Views: Fleet overview with a live map of sensor health, per-sensor drill-down,
 and a downloadable issues table. Reads everything from PostgreSQL.
@@ -26,7 +26,7 @@ from src.report import generate_report  # noqa: E402
 st.set_page_config(page_title="Factory Pulse", page_icon="📡", layout="wide")
 
 # --------------------------------------------------------------------------- #
-# Theme — "sodium instrument": warm ink + bone, a single restrained amber
+# Theme - "sodium instrument": warm ink + bone, a single restrained amber
 # signal, flat (no glow), fine hairlines, editorial section indexing. Kept in
 # one place so the Python below stays about data, not styling.
 # --------------------------------------------------------------------------- #
@@ -71,7 +71,7 @@ HUD_CSS = """
 .hud-live{color:var(--ink);display:flex;gap:7px;align-items:center;justify-content:flex-end;}
 .hud-dot{width:6px;height:6px;border-radius:50%;background:var(--live);}
 
-/* ---- section headings: "01 — TITLE" with a hairline rule ---- */
+/* ---- section headings: "01 - TITLE" with a hairline rule ---- */
 .stApp h2,.stApp h3{font-family:var(--display);font-weight:500;letter-spacing:.01em;
   text-transform:none;font-size:1.02rem;color:var(--ink);
   display:flex;align-items:center;gap:14px;margin-top:6px;}
@@ -270,7 +270,7 @@ with tab_overview:
 with tab_drill:
     reporting_sensors = health[health["n_readings"] > 0].sort_values(
         "n_anomalies", ascending=False)
-    labels = {int(r.location_id): f"{r.location_id} — {r.description} "
+    labels = {int(r.location_id): f"{r.location_id} - {r.description} "
               f"({int(r.n_anomalies)} issues)" for r in reporting_sensors.itertuples()}
     loc = st.selectbox("Sensor", list(labels), format_func=labels.get)
 
@@ -294,7 +294,7 @@ with tab_drill:
         ax.axvspan(row.start_ts, row.end_ts, color="#e8930c", alpha=0.45)
     ax.set_xlabel("time", color="#857f70", fontfamily="monospace", fontsize=9)
     ax.set_ylabel("pedestrians / hour", color="#857f70", fontfamily="monospace", fontsize=9)
-    ax.set_title(f"sensor {loc}  —  hourly counts   (red = outage · amber = flat-line)",
+    ax.set_title(f"sensor {loc}  -  hourly counts   (red = outage · amber = flat-line)",
                  color="#e8e3d6", fontfamily="monospace", fontsize=10, loc="left", pad=12)
     ax.tick_params(colors="#857f70", labelsize=8)
     for spine in ax.spines.values():
@@ -338,7 +338,7 @@ with tab_report:
         with st.spinner("Writing report..."):
             report_md, source = generate_report(engine(), days=days)
         if source == "template-fallback":
-            st.info("Ollama not detected — used the built-in template. Install "
+            st.info("Ollama not detected - used the built-in template. Install "
                     "Ollama and run `ollama pull llama3.2` for LLM-written prose.")
         else:
             st.success(f"Written by local model ({source}).")

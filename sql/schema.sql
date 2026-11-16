@@ -1,7 +1,7 @@
 -- ============================================================================
--- Factory Pulse — database schema (PostgreSQL)
+-- Factory Pulse - database schema (PostgreSQL)
 -- ============================================================================
--- Design notes (FIT2094):
+-- Design notes:
 --   * sensor uses its NATURAL key (location_id, stable in the source data) as
 --     the primary key; the children use surrogate BIGSERIAL keys.
 --   * reading, baseline and anomaly are children of sensor via FOREIGN KEYs

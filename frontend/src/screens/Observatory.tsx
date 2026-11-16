@@ -38,7 +38,7 @@ export function Observatory({ onInspect }: { onInspect: (id: number) => void }) 
     nodata: sensors.filter((s) => s.status === 'nodata').length,
   }
 
-  // the three most critical sensors, resolved to coordinates → always annotated
+  // the three most critical sensors, resolved to coordinates for annotation
   const pinned: Pinned[] = (fleet?.attention ?? []).slice(0, 3)
     .map((a) => { const s = sensors.find((x) => x.id === a.id); return s ? { id: a.id, desc: a.desc, issues: a.issues, lat: s.lat, lon: s.lon } : null })
     .filter((x): x is Pinned => x !== null)
@@ -65,7 +65,7 @@ export function Observatory({ onInspect }: { onInspect: (id: number) => void }) 
           Urban<br />Observatory
         </h1>
         <p className="font-mono mt-3 text-[9.5px] leading-relaxed" style={{ color: 'var(--muted)', letterSpacing: '.14em' }}>
-          FIG. 01 — SPATIAL HEALTH OF THE CITY<br />OF MELBOURNE PEDESTRIAN NETWORK
+          FIG. 01 - SPATIAL HEALTH OF THE CITY<br />OF MELBOURNE PEDESTRIAN NETWORK
         </p>
         <div className="font-mono mt-4 text-[9px]" style={{ color: 'var(--faint)', letterSpacing: '.14em' }}>
           37.8136°S · 144.9631°E
@@ -100,7 +100,7 @@ export function Observatory({ onInspect }: { onInspect: (id: number) => void }) 
         <div className="mt-2 flex gap-6">
           {[['SENSORS', f?.sensors], ['REPORTING', f?.reporting], ['FLAGGED', f?.flagged]].map(([k, v], i) => (
             <motion.div key={k as string} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 + i * 0.07 }}>
-              <div className="font-display text-[1.5rem] font-semibold leading-none" style={{ color: 'var(--ink)' }}>{v ?? '—'}</div>
+              <div className="font-display text-[1.5rem] font-semibold leading-none" style={{ color: 'var(--ink)' }}>{v ?? '-'}</div>
               <div className="font-mono mt-1 text-[8px] tracking-[0.16em]" style={{ color: 'var(--muted)' }}>{k}</div>
             </motion.div>
           ))}
@@ -117,7 +117,7 @@ export function Observatory({ onInspect }: { onInspect: (id: number) => void }) 
         {selectedId ? 'CLICK EMPTY SPACE TO RESET' : 'SELECT A NODE TO INSPECT →'}
       </div>
 
-      {err && <div className="absolute left-1/2 top-1/2 z-20 font-mono text-xs" style={{ color: 'var(--fault)' }}>API ERROR — {err}</div>}
+      {err && <div className="absolute left-1/2 top-1/2 z-20 font-mono text-xs" style={{ color: 'var(--fault)' }}>API ERROR - {err}</div>}
     </div>
   )
 }

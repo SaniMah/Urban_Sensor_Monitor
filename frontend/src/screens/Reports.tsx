@@ -29,7 +29,7 @@ export function Reports() {
     try {
       const r = await api.report(days)
       setReport(r.report); setSource(r.source); setIsLlm(r.is_llm)
-    } catch (e) { setReport(`ERROR — ${(e as Error).message}`) } finally { setBusy(false) }
+    } catch (e) { setReport(`ERROR - ${(e as Error).message}`) } finally { setBusy(false) }
   }
 
   const download = () => {
@@ -50,7 +50,7 @@ export function Reports() {
             <button onClick={generate} disabled={busy}
               className="font-mono px-4 py-2 text-[11px] tracking-wider"
               style={{ background: 'var(--coral)', color: '#0b0c0f', opacity: busy ? 0.6 : 1 }}>
-              {busy ? 'WRITING…' : 'GENERATE'}
+              {busy ? 'WRITING...' : 'GENERATE'}
             </button>
           </div>
         } />
@@ -73,7 +73,7 @@ export function Reports() {
         <div className="min-h-0 flex-1 overflow-auto px-8 py-6">
           {busy && (
             <div className="flex h-full flex-col items-center justify-center gap-3">
-              <div className="font-mono text-[11px] tracking-[0.2em]" style={{ color: 'var(--coral)' }}>GATHERING FACTS…</div>
+              <div className="font-mono text-[11px] tracking-[0.2em]" style={{ color: 'var(--coral)' }}>GATHERING FACTS...</div>
               <div className="font-mono text-[10px]" style={{ color: 'var(--muted)' }}>querying the last {days} days · composing draft</div>
             </div>
           )}
@@ -82,7 +82,7 @@ export function Reports() {
             <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
               <div className="font-serif text-2xl italic" style={{ color: 'var(--faint)' }}>No report yet</div>
               <p className="font-mono max-w-sm text-[10.5px] leading-relaxed" style={{ color: 'var(--muted)', letterSpacing: '.04em' }}>
-                CHOOSE A WINDOW AND GENERATE. THE REPORT USES ONLY COMPUTED NUMBERS —
+                CHOOSE A WINDOW AND GENERATE. THE REPORT USES ONLY COMPUTED NUMBERS -
                 WRITTEN BY A LOCAL MODEL (OLLAMA) WHEN AVAILABLE, OTHERWISE A DETERMINISTIC
                 TEMPLATE. ALWAYS A DRAFT TO REVIEW BEFORE USE.
               </p>

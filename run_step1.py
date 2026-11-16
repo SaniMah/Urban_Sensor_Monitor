@@ -1,4 +1,4 @@
-"""Step 1 — ingest + first look.
+"""Step 1 - ingest + first look.
 
 Pull the sensor list and a recent window of hourly counts from the City of
 Melbourne API, cache them to data/, print a summary, and plot one sensor's
@@ -65,7 +65,7 @@ def main():
         ax.plot(prof.index, prof[True], "-o", ms=4, color="#e07a5f", label="weekend avg")
     ax.set_xlabel("hour of day")
     ax.set_ylabel("avg pedestrians / hour")
-    ax.set_title(f"Sensor {top_loc} ({name}) — daily pattern (this is what the baseline learns)")
+    ax.set_title(f"Sensor {top_loc} ({name}) - daily pattern (this is what the baseline learns)")
     ax.set_xticks(range(0, 24, 2))
     ax.legend()
     fig.tight_layout()

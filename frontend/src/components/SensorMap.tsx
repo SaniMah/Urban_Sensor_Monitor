@@ -38,7 +38,7 @@ export function SensorMap({ sensors, selectedId, detail, pinned = [], light = fa
 
   const sensorsRef = useRef(sensors); sensorsRef.current = sensors
   const onSelectRef = useRef(onSelect); onSelectRef.current = onSelect
-  const trackRef = useRef<number[]>([]) // ids whose screen points we need
+  const trackRef = useRef<number[]>([]) // ids whose screen points are tracked
 
   // init once
   useEffect(() => {

@@ -27,7 +27,7 @@ export function AnnotationPanel({ detail, style, onClose, onInspect }: Props) {
       trigger: 'axis', backgroundColor: '#171922', borderColor: 'rgba(236,231,219,.22)',
       textStyle: { color: '#ece7db', fontFamily: 'JetBrains Mono', fontSize: 10 },
       formatter: (p: { name: string; value: number }[]) =>
-        `${p[0].name.slice(5, 16)}<br/>${p[0].value ?? '—'} ped/h`,
+        `${p[0].name.slice(5, 16)}<br/>${p[0].value ?? '-'} ped/h`,
     },
     series: [{
       type: 'line', data: vals, showSymbol: false, lineStyle: { color: '#f0611f', width: 1 },

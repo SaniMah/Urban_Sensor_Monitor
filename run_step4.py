@@ -1,7 +1,7 @@
-"""Step 4 — run the health rules on the loaded data and store the anomalies.
+"""Step 4 - run the health rules on the loaded data and store the anomalies.
 
 Reads readings + baseline from the database, applies all five rules, writes the
-results to the `anomaly` table, and prints a summary — including the real
+results to the `anomaly` table, and prints a summary - including the real
 sensor-health issues found in the actual Melbourne data.
 
 Run:

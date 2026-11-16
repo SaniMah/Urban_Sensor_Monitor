@@ -1,4 +1,4 @@
-"""Step 2 — database + baseline.
+"""Step 2 - database + baseline.
 
 Create the schema, load the cached sensor list and hourly readings, compute each
 sensor's seasonal baseline (expected count by day-of-week and hour-of-day), and

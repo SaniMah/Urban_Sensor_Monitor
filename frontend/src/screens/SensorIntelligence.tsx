@@ -99,7 +99,7 @@ export function SensorIntelligence({ sensorId }: { sensorId: number | null }) {
             className="font-mono max-w-[360px] border bg-transparent px-3 py-2 text-[11px] outline-none"
             style={{ borderColor: 'var(--line-2)', color: 'var(--ink)' }}>
             {list.map((s) => (
-              <option key={s.id} value={s.id} style={{ background: '#131419' }}>{s.id} — {s.desc} ({s.issues})</option>
+              <option key={s.id} value={s.id} style={{ background: '#131419' }}>{s.id} - {s.desc} ({s.issues})</option>
             ))}
           </select>
         } />
@@ -154,7 +154,7 @@ export function SensorIntelligence({ sensorId }: { sensorId: number | null }) {
           <div className="mt-2 border" style={{ borderColor: 'var(--line)', height: 310 }}>
             {detail
               ? <ReactECharts option={option} style={{ height: 310 }} opts={{ renderer: 'svg' }} notMerge />
-              : <div className="flex h-full items-center justify-center font-mono text-xs" style={{ color: 'var(--muted)' }}>{loading ? 'LOADING…' : 'NO DATA'}</div>}
+              : <div className="flex h-full items-center justify-center font-mono text-xs" style={{ color: 'var(--muted)' }}>{loading ? 'LOADING...' : 'NO DATA'}</div>}
           </div>
 
           <div className="font-mono mt-4 text-[10px] tracking-[0.14em]" style={{ color: 'var(--muted)' }}>RELATED INCIDENTS · {detail?.anomalies.length ?? 0}</div>
@@ -165,7 +165,7 @@ export function SensorIntelligence({ sensorId }: { sensorId: number | null }) {
                   <tr key={i} style={{ color: 'var(--ink)' }}>
                     <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: a.type === 'outage' ? 'var(--fault)' : 'var(--warn)', width: 110 }}>{a.type.replace('_', ' ')}</td>
                     <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: 'var(--muted)' }}>{a.start_ts?.slice(0, 16)}</td>
-                    <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)' }}>{a.value ?? '—'}</td>
+                    <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)' }}>{a.value ?? '-'}</td>
                     <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: 'var(--faint)' }}>{a.detail?.slice(0, 54)}</td>
                   </tr>
                 ))}

@@ -1,5 +1,11 @@
-# Factory Pulse API — in addition to the project root requirements.txt
-# (which already provides pandas, SQLAlchemy, psycopg2, openpyxl, requests).
+# Factory Pulse API — self-contained deploy dependencies (lean: no Streamlit,
+# matplotlib, jupyter — the API doesn't need them). Used by the Dockerfile.
 fastapi==0.116.1
-starlette==0.47.2        # pinned so it also satisfies Streamlit (>=0.46)
+starlette==0.47.2          # pinned so it also satisfies Streamlit locally (>=0.46)
 uvicorn[standard]==0.34.0
+pandas
+numpy
+SQLAlchemy
+psycopg2-binary
+python-dotenv
+openpyxl                   # XLSX export

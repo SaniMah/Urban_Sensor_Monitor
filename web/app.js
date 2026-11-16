@@ -1,4 +1,4 @@
-/* Factory Pulse — console renderer. Loads data/snapshot.json and draws the
+/* Factory Pulse - console renderer. Loads data/snapshot.json and draws the
    fleet readout, issue classes, priority faults, and the geographic schematic
    (nodes + reticles + annotation callouts with elbow leads). Pure vanilla. */
 
@@ -10,7 +10,7 @@ const el = (n, a = {}) => {
   return e;
 };
 const esc = (s) => String(s).replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]));
-const trunc = (s, n) => (s.length > n ? s.slice(0, n - 1) + "…" : s);
+const trunc = (s, n) => (s.length > n ? s.slice(0, n - 1) + "..." : s);
 
 // ---- live clock ----
 function tick() {
@@ -23,7 +23,7 @@ setInterval(tick, 1000); tick();
 // ---- main ----
 fetch("data/snapshot.json").then((r) => r.json()).then(render).catch((e) => {
   $("#plot").innerHTML = `<div style="padding:20px;color:#e4493f;font:11px monospace">
-    SNAPSHOT LOAD FAILED — ${esc(e.message)}</div>`;
+    SNAPSHOT LOAD FAILED - ${esc(e.message)}</div>`;
 });
 
 function render(d) {

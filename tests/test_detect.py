@@ -1,4 +1,4 @@
-"""Tests for the sensor-health rules. All on synthetic data — no database."""
+"""Tests for the sensor-health rules. All on synthetic data - no database."""
 import numpy as np
 import pandas as pd
 

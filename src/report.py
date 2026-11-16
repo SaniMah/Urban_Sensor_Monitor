@@ -1,12 +1,11 @@
-"""Step 7 — AI weekly health report.
+"""Step 7 - AI weekly health report.
 
 Collect the week's sensor-health numbers into a `facts` dict, then have a LOCAL
 LLM (Ollama) write a plain-English report for council staff that uses ONLY those
 numbers. If Ollama isn't running, fall back to a deterministic template filled
 from the same facts. Always labelled a draft to review before use.
 
-Install the local model (one-off, done by the user):
-    https://ollama.com  ->  ollama pull llama3.2
+Local model setup (optional): https://ollama.com, then `ollama pull llama3.2`.
 """
 from __future__ import annotations
 
@@ -106,7 +105,7 @@ def build_prompt(facts: dict) -> str:
         "- worst_outage = the single longest outage; mention it in the Summary.\n\n"
         "Write in complete, flowing sentences for a human reader. NEVER print the "
         "JSON field names (like 'fleet.sensors' or 'issues.by_type') in your "
-        "report — translate every number into plain English.\n\n"
+        "report - translate every number into plain English.\n\n"
         f"Begin with the line: {DRAFT_BANNER}\n"
         "Then these sections as headings: Summary, Sensors needing attention, "
         "Issue breakdown, Recommended next checks.\n\n"
@@ -138,7 +137,7 @@ def generate_with_ollama(prompt: str, model: str = DEFAULT_MODEL, timeout: int =
 def render_fallback(facts: dict) -> str:
     p, fl, iss = facts["period"], facts["fleet"], facts["issues"]
     lines = [
-        f"# Weekly Sensor-Health Report — {DRAFT_BANNER}",
+        f"# Weekly Sensor-Health Report - {DRAFT_BANNER}",
         "",
         f"**Period:** {p['start']} to {p['end']} ({p['days']} days)",
         "",
@@ -165,7 +164,7 @@ def render_fallback(facts: dict) -> str:
             if a["off_baseline"]:
                 bits.append(f"{a['off_baseline']} off-baseline")
             lines.append(f"- **{a['description']}** (sensor {a['location_id']}): "
-                         f"{a['issues']} issues — {', '.join(bits)}.")
+                         f"{a['issues']} issues - {', '.join(bits)}.")
     else:
         lines.append("- None this period.")
 
@@ -176,7 +175,7 @@ def render_fallback(facts: dict) -> str:
         *breakdown,
         "",
         "## Recommended next checks",
-        "- Prioritise sensors with outages — check power and data connectivity.",
+        "- Prioritise sensors with outages - check power and data connectivity.",
         "- Inspect flat-lined sensors on site; a repeating value usually means a "
         "stuck or faulty unit.",
         "- Review off-baseline sensors against known events (works, weather, "

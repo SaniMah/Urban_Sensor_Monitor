@@ -81,7 +81,7 @@ export function Incidents({ onInspect }: { onInspect: (id: number) => void }) {
       </div>
 
       <div className="font-mono mt-4 text-[10px] tracking-[0.14em]" style={{ color: 'var(--muted)' }}>
-        {loading ? 'LOADING…' : `${filtered.length.toLocaleString()} RECORDS · CLICK A ROW FOR DETAIL`}
+        {loading ? 'LOADING...' : `${filtered.length.toLocaleString()} RECORDS · CLICK A ROW FOR DETAIL`}
       </div>
 
       <div className="mt-2 min-h-0 flex-1 overflow-auto border" style={{ borderColor: 'var(--line)' }}>
@@ -95,7 +95,7 @@ export function Incidents({ onInspect }: { onInspect: (id: number) => void }) {
           </thead>
           <tbody>
             {filtered.slice(0, 1200).map((r) => {
-              const sev = SEVERITY[r.type] ?? { c: 'var(--muted)', label: '—' }
+              const sev = SEVERITY[r.type] ?? { c: 'var(--muted)', label: '-' }
               const isOpen = open === r.id
               return (
                 <Fragment key={r.id}>
@@ -109,8 +109,8 @@ export function Incidents({ onInspect }: { onInspect: (id: number) => void }) {
                     <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: 'var(--muted)' }}>{r.location_id}</td>
                     <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: 'var(--muted)' }}>{r.desc?.slice(0, 32)}</td>
                     <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: 'var(--muted)' }}>{r.start_ts?.slice(0, 16)}</td>
-                    <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)' }}>{r.value ?? '—'}</td>
-                    <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: 'var(--coral)' }}>{isOpen ? '−' : '+'}</td>
+                    <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)' }}>{r.value ?? '-'}</td>
+                    <td className="border-b px-3 py-1.5" style={{ borderColor: 'var(--line)', color: 'var(--coral)' }}>{isOpen ? '-' : '+'}</td>
                   </tr>
                   {isOpen && (
                     <tr style={{ background: 'var(--surface)' }}>
