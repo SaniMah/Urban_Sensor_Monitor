@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
 /* ========================================================================
@@ -22,9 +22,43 @@
   --warn:#e8a12c;
 
   --display:'Space Grotesk',sans-serif;
+  --serif:'Fraunces','Space Grotesk',serif;   /* editorial masthead */
   --sans:'Inter',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
 }
+
+/* ---- warm-white "Observation Plate" theme (Observatory only) ---- */
+.theme-light{
+  --bg:#f3efe6;
+  --surface:#fbf9f3;
+  --surface-2:#ece7da;
+  --line:rgba(28,24,18,.16);
+  --line-2:rgba(28,24,18,.32);
+  --ink:#1b1812;
+  --muted:rgba(27,24,18,.56);
+  --faint:rgba(27,24,18,.34);
+  --coral:#d94e18;
+  --coral-soft:#e2652e;
+  --ok:#6f8a46;
+  --fault:#c33a2d;
+  --warn:#b67611;
+  background:var(--bg);
+  color:var(--ink);
+}
+
+.font-serif{font-family:var(--serif);}
+
+/* plate grid + registration marks */
+.plate-grid{
+  background-image:
+    linear-gradient(rgba(27,24,18,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(27,24,18,.045) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.reg{position:absolute;width:11px;height:11px;z-index:20;pointer-events:none;}
+.reg::before,.reg::after{content:"";position:absolute;background:var(--line-2);}
+.reg::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-.5px);}
+.reg::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-.5px);}
 
 *{box-sizing:border-box;}
 html,body,#root{height:100%;margin:0;}

@@ -40,7 +40,7 @@ export function AnnotationPanel({ detail, style, onClose, onInspect }: Props) {
       initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 12 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
       className="absolute z-10"
-      style={{ ...style, background: 'rgba(19,20,25,.94)', border: '1px solid var(--line-2)', backdropFilter: 'blur(2px)' }}
+      style={{ ...style, background: 'var(--surface)', border: '1px solid var(--line-2)', boxShadow: '0 8px 30px rgba(0,0,0,.14)' }}
     >
       {/* corner ticks */}
       <span className="pointer-events-none absolute -left-px -top-px h-2.5 w-2.5 border-l border-t" style={{ borderColor: 'var(--coral)' }} />
