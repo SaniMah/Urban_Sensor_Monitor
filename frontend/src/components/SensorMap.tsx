@@ -13,12 +13,13 @@ interface Props {
   selectedId: number | null
   detail: SensorDetail | null
   onSelect: (id: number | null) => void
+  onInspect: (id: number) => void
 }
 
 const radius = (s: Sensor) =>
   s.status === 'fault' ? 4 + Math.min(Math.sqrt(s.issues) * 0.7, 11) : 3
 
-export function SensorMap({ sensors, selectedId, detail, onSelect }: Props) {
+export function SensorMap({ sensors, selectedId, detail, onSelect, onInspect }: Props) {
   const box = useRef<HTMLDivElement>(null)
   const map = useRef<L.Map | null>(null)
   const layer = useRef<L.LayerGroup | null>(null)
@@ -111,7 +112,7 @@ export function SensorMap({ sensors, selectedId, detail, onSelect }: Props) {
         {detail && pt && (
           <AnnotationPanel key={detail.sensor.id} detail={detail}
             style={{ left: panelX, top: panelY, width: panelW, zIndex: 500 }}
-            onClose={() => onSelect(null)} />
+            onClose={() => onSelect(null)} onInspect={() => onInspect(detail.sensor.id)} />
         )}
       </AnimatePresence>
     </div>

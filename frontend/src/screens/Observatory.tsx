@@ -8,7 +8,7 @@ const WINDOWS: { label: string; days: number | null }[] = [
   { label: 'ALL', days: null }, { label: '30D', days: 30 }, { label: '7D', days: 7 },
 ]
 
-export function Observatory() {
+export function Observatory({ onInspect }: { onInspect: (id: number) => void }) {
   const [days, setDays] = useState<number | null>(30)
   const [fleet, setFleet] = useState<FleetSummary | null>(null)
   const [sensors, setSensors] = useState<Sensor[]>([])
@@ -45,7 +45,7 @@ export function Observatory() {
   return (
     <div className="relative h-full w-full overflow-hidden">
       <div className="absolute inset-0">
-        <SensorMap sensors={sensors} selectedId={selectedId} detail={detail} onSelect={setSelectedId} />
+        <SensorMap sensors={sensors} selectedId={selectedId} detail={detail} onSelect={setSelectedId} onInspect={onInspect} />
       </div>
 
       {/* top-left: masthead + fleet readout */}

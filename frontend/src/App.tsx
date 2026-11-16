@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Observatory } from './screens/Observatory'
+import { SensorIntelligence } from './screens/SensorIntelligence'
 import { Incidents } from './screens/Incidents'
 import { Reports } from './screens/Reports'
 
@@ -14,6 +15,9 @@ const NAV: { id: ScreenId; n: string; label: string }[] = [
 
 export default function App() {
   const [screen, setScreen] = useState<ScreenId>('observatory')
+  const [activeSensor, setActiveSensor] = useState<number | null>(null)
+
+  const inspect = (id: number) => { setActiveSensor(id); setScreen('sensor') }
 
   return (
     <div className="grid-bg flex h-full w-full">
@@ -40,21 +44,11 @@ export default function App() {
 
       {/* screen */}
       <main className="relative min-w-0 flex-1">
-        {screen === 'observatory' && <Observatory />}
-        {screen === 'sensor' && <Placeholder title="Sensor Intelligence" n="02" />}
+        {screen === 'observatory' && <Observatory onInspect={inspect} />}
+        {screen === 'sensor' && <SensorIntelligence sensorId={activeSensor} />}
         {screen === 'incidents' && <Incidents />}
         {screen === 'reports' && <Reports />}
       </main>
-    </div>
-  )
-}
-
-function Placeholder({ title, n }: { title: string; n: string }) {
-  return (
-    <div className="flex h-full flex-col items-center justify-center">
-      <div className="label" style={{ color: 'var(--coral)' }}>SCREEN {n}</div>
-      <h2 className="font-display mt-2 text-3xl font-semibold">{title}</h2>
-      <p className="font-mono mt-3 text-[11px]" style={{ color: 'var(--muted)' }}>// IN DEVELOPMENT</p>
     </div>
   )
 }

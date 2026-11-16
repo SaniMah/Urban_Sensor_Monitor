@@ -7,9 +7,10 @@ interface Props {
   detail: SensorDetail
   style: CSSProperties
   onClose: () => void
+  onInspect: () => void
 }
 
-export function AnnotationPanel({ detail, style, onClose }: Props) {
+export function AnnotationPanel({ detail, style, onClose, onInspect }: Props) {
   const { sensor, series, anomalies } = detail
   const counts = anomalies.reduce<Record<string, number>>((a, x) => {
     a[x.type] = (a[x.type] ?? 0) + 1
@@ -65,7 +66,7 @@ export function AnnotationPanel({ detail, style, onClose }: Props) {
 
       <div className="label px-4 pb-1 pt-1">HOURLY COUNT · PEAK {peak.toLocaleString()}</div>
 
-      <div className="mt-1 grid grid-cols-3 gap-px px-4 pb-4" style={{ color: 'var(--ink)' }}>
+      <div className="mt-1 grid grid-cols-3 gap-px px-4" style={{ color: 'var(--ink)' }}>
         {['outage', 'flat_line', 'off_baseline'].map((t) => (
           <div key={t}>
             <div className="font-display text-lg leading-none" style={{ color: counts[t] ? 'var(--fault)' : 'var(--muted)' }}>
@@ -75,6 +76,12 @@ export function AnnotationPanel({ detail, style, onClose }: Props) {
           </div>
         ))}
       </div>
+
+      <button onClick={onInspect}
+        className="font-mono mt-3 w-full border-t py-2.5 text-[9.5px] tracking-widest"
+        style={{ borderColor: 'var(--line-2)', color: 'var(--coral)' }}>
+        FULL ANALYSIS →
+      </button>
     </motion.div>
   )
 }
