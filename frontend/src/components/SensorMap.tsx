@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import type { Sensor, SensorDetail } from '../types'
 import { AnnotationPanel } from './AnnotationPanel'
 
@@ -25,6 +25,7 @@ export function SensorMap({ sensors, selectedId, detail, onSelect, onInspect }: 
   const layer = useRef<L.LayerGroup | null>(null)
   const ring = useRef<L.CircleMarker | null>(null)
   const [pt, setPt] = useState<{ x: number; y: number } | null>(null)
+  const reduce = useReducedMotion()
 
   // latest values for stable event handlers
   const sensorsRef = useRef(sensors); sensorsRef.current = sensors
@@ -67,13 +68,24 @@ export function SensorMap({ sensors, selectedId, detail, onSelect, onInspect }: 
     const lg = layer.current
     if (!lg) return
     lg.clearLayers()
+    const m = map.current
     for (const s of sensors) {
-      L.circleMarker([s.lat, s.lon], {
-        radius: radius(s),
+      const base = radius(s)
+      const cm = L.circleMarker([s.lat, s.lon], {
+        radius: base,
         color: '#0b0c0f', weight: 1,
         fillColor: STATUS[s.status], fillOpacity: s.status === 'nodata' ? 0.5 : 0.9,
-      }).on('click', (e) => { L.DomEvent.stopPropagation(e); onSelectRef.current(s.id) })
-        .addTo(lg)
+      })
+      cm.on('click', (e) => { L.DomEvent.stopPropagation(e); onSelectRef.current(s.id) })
+      cm.on('mouseover', () => {
+        cm.setStyle({ radius: base + 3, weight: 1.5, color: '#f0611f' })
+        if (m) m.getContainer().style.cursor = 'pointer'
+      })
+      cm.on('mouseout', () => {
+        cm.setStyle({ radius: base, weight: 1, color: '#0b0c0f' })
+        if (m) m.getContainer().style.cursor = ''
+      })
+      cm.addTo(lg)
     }
   }, [sensors])
 
@@ -103,9 +115,20 @@ export function SensorMap({ sensors, selectedId, detail, onSelect, onInspect }: 
     <div ref={box} className="relative h-full w-full">
       {pt && detail && panelX > pt.x && (
         <svg className="pointer-events-none absolute inset-0 h-full w-full" style={{ zIndex: 450 }}>
+          {/* pulsing locator ring (replays per selected node) */}
+          {!reduce && (
+            <motion.circle key={`ping-${detail.sensor.id}`} cx={pt.x} cy={pt.y}
+              fill="none" stroke="#f0611f" strokeWidth={1}
+              initial={{ r: 5, opacity: 0.7 }} animate={{ r: 20, opacity: 0 }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: 'easeOut' }} />
+          )}
           <circle cx={pt.x} cy={pt.y} r={5} fill="none" stroke="#f0611f" strokeWidth={1} />
-          <path d={`M ${pt.x} ${pt.y} L ${midX} ${pt.y} L ${midX} ${panelY + 24} L ${panelX} ${panelY + 24}`}
-            fill="none" stroke="#f0611f" strokeWidth={1} strokeOpacity={0.7} />
+          {/* leader line draws itself in on selection */}
+          <motion.path key={`lead-${detail.sensor.id}`}
+            d={`M ${pt.x} ${pt.y} L ${midX} ${pt.y} L ${midX} ${panelY + 24} L ${panelX} ${panelY + 24}`}
+            fill="none" stroke="#f0611f" strokeWidth={1} strokeOpacity={0.7}
+            initial={reduce ? false : { pathLength: 0 }} animate={{ pathLength: 1 }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }} />
         </svg>
       )}
       <AnimatePresence>

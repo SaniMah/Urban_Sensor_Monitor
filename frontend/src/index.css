@@ -71,6 +71,15 @@ body{
 .leaflet-control-zoom a:hover{background:var(--surface-2)!important;}
 .leaflet-bar{border:none!important;}
 
+/* smooth state changes on interactive elements */
+button, a, select, input { transition: background-color .18s ease, color .18s ease, border-color .18s ease, opacity .18s ease; }
+button:not(:disabled) { cursor: pointer; }
+tbody tr { transition: background-color .12s ease; }
+tbody tr:hover { background: rgba(236,231,219,.035); }
+
+/* leaflet zoom control buttons inherit the smooth transition */
+.leaflet-control-zoom a { transition: background-color .18s ease; }
+
 /* thin scrollbars */
 *::-webkit-scrollbar{width:7px;height:7px;}
 *::-webkit-scrollbar-thumb{background:var(--line-2);}

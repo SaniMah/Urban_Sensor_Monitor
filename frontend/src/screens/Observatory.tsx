@@ -58,11 +58,13 @@ export function Observatory({ onInspect }: { onInspect: (id: number) => void }) 
         </p>
 
         <div className="mt-5 flex gap-5">
-          {[['SENSORS', f?.sensors], ['REPORTING', f?.reporting], ['FLAGGED', f?.flagged]].map(([k, v]) => (
-            <div key={k as string}>
+          {[['SENSORS', f?.sensors], ['REPORTING', f?.reporting], ['FLAGGED', f?.flagged]].map(([k, v], i) => (
+            <motion.div key={k as string}
+              initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.12 + i * 0.08, duration: 0.3 }}>
               <div className="font-display text-[1.7rem] font-semibold leading-none">{v ?? '—'}</div>
               <div className="label mt-1" style={{ fontSize: '.52rem' }}>{k}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
         <div className="mt-3 font-mono text-[10px]" style={{ color: 'var(--muted)' }}>
