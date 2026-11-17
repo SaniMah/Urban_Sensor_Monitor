@@ -9,8 +9,8 @@ Demonstrated on a **real public sensor network**: the City of Melbourne
 **Pedestrian Counting System** (hourly counts from ~130 street sensors).
 
 > Portfolio project by **Sanithma** (Mechatronics Engineering & Computer
-> Science, Monash University). Built with AI tooling; code and results reviewed
-> and tested.
+> Science, Monash University). AI tools were used to help revise the code and
+> documentation; all logic and results were reviewed and tested.
 
 ---
 
