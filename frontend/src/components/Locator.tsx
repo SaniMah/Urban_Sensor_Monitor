@@ -28,7 +28,7 @@ export function Locator({ lat, lon }: { lat: number; lon: number }) {
     m.setView([lat, lon], 14, { animate: false })
     if (dot.current) dot.current.remove()
     dot.current = L.circleMarker([lat, lon], {
-      radius: 7, color: '#f0611f', weight: 1.5, fillColor: '#f0611f', fillOpacity: 0.3,
+      radius: 7, color: '#8B6CFF', weight: 1.5, fillColor: '#8B6CFF', fillOpacity: 0.3,
     }).addTo(m)
   }, [lat, lon])
 

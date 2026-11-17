@@ -3,7 +3,7 @@
 
 /* ========================================================================
    URBAN SENSOR MONITOR // OBSERVATORY - design system
-   Charcoal + warm ink · one coral signal · sage healthy · red fault.
+   Charcoal + warm ink · one violet signal · sage healthy · red fault.
    Editorial serif headlines (Fraunces) x display + labels (Space Grotesk) x UI sans (Inter).
    ======================================================================== */
 :root{
@@ -15,8 +15,8 @@
   --ink:#ece7db;
   --muted:rgba(236,231,219,.52);
   --faint:rgba(236,231,219,.30);
-  --coral:#f0611f;
-  --coral-soft:#ff7a3c;
+  --coral:#8B6CFF;
+  --coral-soft:#A78BFF;
   --ok:#8ea96a;
   --fault:#e0473f;
   --warn:#e8a12c;
@@ -38,8 +38,8 @@
   --ink:#1b1812;
   --muted:rgba(27,24,18,.56);
   --faint:rgba(27,24,18,.34);
-  --coral:#d94e18;
-  --coral-soft:#e2652e;
+  --coral:#6C4CE0;
+  --coral-soft:#5B3FD0;
   --ok:#6f8a46;
   --fault:#c33a2d;
   --warn:#b67611;

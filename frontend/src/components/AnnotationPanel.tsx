@@ -30,8 +30,8 @@ export function AnnotationPanel({ detail, style, onClose, onInspect }: Props) {
         `${p[0].name.slice(5, 16)}<br/>${p[0].value ?? '-'} ped/h`,
     },
     series: [{
-      type: 'line', data: vals, showSymbol: false, lineStyle: { color: '#f0611f', width: 1 },
-      areaStyle: { color: 'rgba(240,97,31,.12)' },
+      type: 'line', data: vals, showSymbol: false, lineStyle: { color: '#8B6CFF', width: 1 },
+      areaStyle: { color: 'rgba(139,108,255,.12)' },
     }],
   }
 

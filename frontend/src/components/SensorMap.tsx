@@ -7,7 +7,7 @@ import { AnnotationPanel } from './AnnotationPanel'
 
 const MELB: [number, number] = [-37.8136, 144.9631]
 const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas'
-const STATUS: Record<string, string> = { ok: '#6f8a46', fault: '#d94e18', nodata: '#b9b2a2' }
+const STATUS: Record<string, string> = { ok: '#6f8a46', fault: '#c33a2d', nodata: '#b9b2a2' }
 const STATUS_DARK: Record<string, string> = { ok: '#8ea96a', fault: '#e0473f', nodata: '#5a5b60' }
 
 export interface Pinned { id: number; desc: string; issues: number; lat: number; lon: number }
@@ -76,7 +76,7 @@ export function SensorMap({ sensors, selectedId, detail, pinned = [], light = fa
         fillColor: palette[s.status], fillOpacity: s.status === 'nodata' ? 0.45 : 0.92,
       })
       cm.on('click', (e) => { L.DomEvent.stopPropagation(e); onSelectRef.current(s.id) })
-      cm.on('mouseover', () => { cm.setStyle({ radius: base + 3, weight: 1.5, color: '#d94e18' }); if (m) m.getContainer().style.cursor = 'pointer' })
+      cm.on('mouseover', () => { cm.setStyle({ radius: base + 3, weight: 1.5, color: '#8B6CFF' }); if (m) m.getContainer().style.cursor = 'pointer' })
       cm.on('mouseout', () => { cm.setStyle({ radius: base, weight: 1, color: stroke }); if (m) m.getContainer().style.cursor = '' })
       cm.addTo(lg)
     }
@@ -103,7 +103,7 @@ export function SensorMap({ sensors, selectedId, detail, pinned = [], light = fa
     if (ring.current) { ring.current.remove(); ring.current = null }
     const s = selectedId == null ? null : sensors.find((x) => x.id === selectedId)
     if (!s) return
-    ring.current = L.circleMarker([s.lat, s.lon], { radius: radius(s) + 6, color: '#d94e18', weight: 1.5, fill: false }).addTo(m)
+    ring.current = L.circleMarker([s.lat, s.lon], { radius: radius(s) + 6, color: '#8B6CFF', weight: 1.5, fill: false }).addTo(m)
   }, [selectedId, sensors])
 
   const W = box.current?.clientWidth ?? 0

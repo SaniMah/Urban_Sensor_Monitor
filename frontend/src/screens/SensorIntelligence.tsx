@@ -72,16 +72,16 @@ export function SensorIntelligence({ sensorId }: { sensorId: number | null }) {
       dataZoom: [
         { type: 'inside' },
         { type: 'slider', height: 16, bottom: 22, borderColor: 'rgba(236,231,219,.18)',
-          fillerColor: 'rgba(240,97,31,.14)', handleStyle: { color: '#f0611f' },
+          fillerColor: 'rgba(139,108,255,.14)', handleStyle: { color: '#8B6CFF' },
           textStyle: { color: 'rgba(236,231,219,.4)', fontFamily: 'JetBrains Mono', fontSize: 9 } },
       ],
       series: [{
         type: 'line', showSymbol: false, data: detail.series.map((p) => [p[0], p[1]]),
-        lineStyle: { color: '#f0611f', width: 1 }, areaStyle: { color: 'rgba(240,97,31,.08)' },
+        lineStyle: { color: '#8B6CFF', width: 1 }, areaStyle: { color: 'rgba(139,108,255,.08)' },
         markArea: { silent: true, data: areas },
         markPoint: {
           symbol: 'pin', symbolSize: 36, data: [{ type: 'max' }],
-          itemStyle: { color: 'rgba(240,97,31,.85)' },
+          itemStyle: { color: 'rgba(139,108,255,.85)' },
           label: { color: '#0b0c0f', fontFamily: 'JetBrains Mono', fontSize: 9, formatter: 'PEAK' },
         },
       }],
