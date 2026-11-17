@@ -29,7 +29,7 @@ export default function App() {
       {/* left nav rail */}
       <nav className="z-30 flex w-14 flex-col items-center gap-1 border-r py-6"
         style={{ borderColor: 'var(--line)' }}>
-        <div className="mb-6 font-display text-sm font-bold" style={{ color: 'var(--coral)' }}>FP</div>
+        <div className="mb-6 font-display text-sm font-bold" style={{ color: 'var(--coral)' }}>USM</div>
         {NAV.map((item) => {
           const active = screen === item.id
           return (
