@@ -1,4 +1,4 @@
-# Factory Pulse — Python dependencies
+# Urban Sensor Monitor - Python dependencies
 # Install into a virtual environment:
 #   python -m venv .venv
 #   .venv\Scripts\Activate.ps1        (Windows PowerShell)

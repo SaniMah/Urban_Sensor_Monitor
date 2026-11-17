@@ -1,4 +1,4 @@
-// Typed fetch client for the Factory Pulse API. One place for every call.
+// Typed fetch client for the Urban Sensor Monitor API. One place for every call.
 import type { FleetSummary, Sensor, SensorDetail, IssueRecord } from './types'
 
 async function get<T>(path: string): Promise<T> {

@@ -1,4 +1,4 @@
-# Factory Pulse - single-image deploy: build the React frontend, then run the
+# Urban Sensor Monitor - single-image deploy: build the React frontend, then run the
 # FastAPI backend which serves both the API and the built frontend.
 
 # ---- stage 1: build the frontend ----

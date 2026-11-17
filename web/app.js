@@ -1,4 +1,4 @@
-/* Factory Pulse - console renderer. Loads data/snapshot.json and draws the
+/* Urban Sensor Monitor - console renderer. Loads data/snapshot.json and draws the
    fleet readout, issue classes, priority faults, and the geographic schematic
    (nodes + reticles + annotation callouts with elbow leads). Pure vanilla. */
 

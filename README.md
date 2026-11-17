@@ -1,4 +1,4 @@
-# Factory Pulse - Urban Observatory
+# Urban Sensor Monitor
 
 **A spatial-intelligence platform that monitors the health of a sensor fleet.**
 It learns each sensor's normal pattern, flags outages, flat-lines, impossible
@@ -22,7 +22,7 @@ IoT, environmental monitors - needs to know every day which sensors are
 value, or is reporting impossible numbers quietly corrupts every dashboard and
 decision downstream. Checking hundreds by hand does not scale.
 
-Factory Pulse screens the whole fleet automatically, flags the unhealthy sensors
+Urban Sensor Monitor screens the whole fleet automatically, flags the unhealthy sensors
 with evidence, and summarises the week for the people who act on it.
 
 ## What it does

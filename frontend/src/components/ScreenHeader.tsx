@@ -8,7 +8,7 @@ export function ScreenHeader({ n, title, caption, right }: {
     <div className="flex items-end justify-between gap-6 border-b pb-4" style={{ borderColor: 'var(--line)' }}>
       <div>
         <div className="font-mono text-[10px] tracking-[0.26em]" style={{ color: 'var(--coral)' }}>
-          FIG. {n} · FACTORYPULSE
+          FIG. {n} · URBAN SENSOR MONITOR
         </div>
         <h2 className="font-serif mt-2 text-[2.5rem] font-normal italic leading-none" style={{ letterSpacing: '-.01em' }}>
           {title}

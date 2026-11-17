@@ -1,4 +1,4 @@
-"""Factory Pulse API - FastAPI over the existing analytical core (src/).
+"""Urban Sensor Monitor API - FastAPI over the existing analytical core (src/).
 
 Run (from project root):
     uvicorn backend.app.main:app --reload --port 8000
@@ -33,7 +33,7 @@ from src.db import get_engine  # noqa: E402
 from src.report import generate_report  # noqa: E402
 from backend.app import queries as q  # noqa: E402
 
-app = FastAPI(title="Factory Pulse API", version="1.0.0")
+app = FastAPI(title="Urban Sensor Monitor API", version="1.0.0")
 
 # Dev frontend runs on Vite (5173/4173); lock CORS to localhost origins.
 app.add_middleware(
@@ -99,14 +99,14 @@ def export(
     if format == "csv":
         buf = io.BytesIO(df.to_csv(index=False).encode())
         media = "text/csv"
-        name = "factory_pulse_issues.csv"
+        name = "urban_sensor_monitor_issues.csv"
     else:
         buf = io.BytesIO()
         with pd.ExcelWriter(buf, engine="openpyxl") as w:
             df.to_excel(w, index=False, sheet_name="issues")
         buf.seek(0)
         media = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        name = "factory_pulse_issues.xlsx"
+        name = "urban_sensor_monitor_issues.xlsx"
     return StreamingResponse(buf, media_type=media,
                              headers={"Content-Disposition": f'attachment; filename="{name}"'})
 

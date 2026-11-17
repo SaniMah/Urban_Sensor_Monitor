@@ -60,7 +60,7 @@ export function Observatory({ onInspect }: { onInspect: (id: number) => void }) 
       {/* masthead */}
       <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
         className="pointer-events-none absolute left-9 top-9 z-10 max-w-[300px]">
-        <div className="font-mono text-[10px] tracking-[0.26em]" style={{ color: 'var(--coral)' }}>FACTORYPULSE / OBSERVATORY</div>
+        <div className="font-mono text-[10px] tracking-[0.26em]" style={{ color: 'var(--coral)' }}>URBAN SENSOR MONITOR / OBSERVATORY</div>
         <h1 className="font-serif mt-2 text-[3.1rem] font-normal italic leading-[0.92]" style={{ color: 'var(--ink)', letterSpacing: '-.01em' }}>
           Urban<br />Observatory
         </h1>

@@ -1,4 +1,4 @@
-"""Factory Pulse source package.
+"""Urban Sensor Monitor source package.
 
 A sensor-fleet health monitoring platform, demonstrated on the City of
 Melbourne Pedestrian Counting System (public hourly counts + sensor locations).

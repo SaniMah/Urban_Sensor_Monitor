@@ -1,4 +1,4 @@
-# Factory Pulse - dark "HUD / instrument panel" theme.
+# Urban Sensor Monitor - dark "HUD / instrument panel" theme.
 # Colour + font fine-tuning is done in app/dashboard.py (injected CSS); this
 # sets the base so Streamlit's own widgets (dataframe, slider, inputs) match.
 [theme]

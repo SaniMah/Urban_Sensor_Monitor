@@ -1,5 +1,5 @@
 -- ============================================================================
--- Factory Pulse - database schema (PostgreSQL)
+-- Urban Sensor Monitor - database schema (PostgreSQL)
 -- ============================================================================
 -- Design notes:
 --   * sensor uses its NATURAL key (location_id, stable in the source data) as

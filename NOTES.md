@@ -1,4 +1,4 @@
-# NOTES - Factory Pulse
+# NOTES - Urban Sensor Monitor
 
 Plain-English notes on how each part works, for my own understanding and
 interview prep. One short entry per build step.
@@ -34,7 +34,7 @@ two projects together show a repeatable approach.
 - **`README.md`** - the public face, framed as a consulting case (problem -> what
   it does -> how to run). Marked "in development".
 
-**Framing:** Factory Pulse is a general **sensor-fleet health monitor**,
+**Framing:** Urban Sensor Monitor is a general **sensor-fleet health monitor**,
 demonstrated on the City of Melbourne Pedestrian Counting System (real public
 data). The same idea applies to factory/IoT sensor fleets - which is why the
 name fits and the story generalises.
@@ -156,7 +156,7 @@ shades a sensor's outages. The map is the geographic view the CAN project could
 not have - a natural fit for city sensor data.
 
 **Launch gotcha (noted):** both this project and CanLog named their launch
-config "dashboard", which collided; renamed this one `factory-pulse-dashboard`
+config "dashboard", which collided; renamed this one `urban-sensor-monitor-dashboard`
 on port 8502. Run: `streamlit run app/dashboard.py`.
 
 **Next (Step 7):** the AI weekly health report - summarise the week's anomalies
@@ -222,7 +222,7 @@ Run with `pytest -q`. (Also fixed a pandas deprecation: `dayofweek` ->
 table), tech/schema, how to run, testing, honest limitations, data & licence,
 and the AI-assistance note. Embeds the seasonal-profile figure.
 
-**Status:** Factory Pulse is feature-complete and submission-ready - it mirrors
+**Status:** Urban Sensor Monitor is feature-complete and submission-ready - it mirrors
 the CAN Log Analyser method (ingest -> DB -> baseline -> detection -> evaluation ->
 dashboard -> AI report) on a different, geographic dataset, which is the point:
 one repeatable approach, two domains.

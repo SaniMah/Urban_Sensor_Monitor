@@ -2,7 +2,7 @@
 # runs the API serving it. DATABASE_URL is supplied as a dashboard env var.
 services:
   - type: web
-    name: factory-pulse
+    name: urban-sensor-monitor
     runtime: docker
     dockerfilePath: ./Dockerfile
     plan: free

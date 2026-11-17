@@ -1,4 +1,4 @@
-"""Factory Pulse - Streamlit dashboard.
+"""Urban Sensor Monitor - Streamlit dashboard.
 
 Views: Fleet overview with a live map of sensor health, per-sensor drill-down,
 and a downloadable issues table. Reads everything from PostgreSQL.
@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.db import get_engine  # noqa: E402
 from src.report import generate_report  # noqa: E402
 
-st.set_page_config(page_title="Factory Pulse", page_icon="📡", layout="wide")
+st.set_page_config(page_title="Urban Sensor Monitor", page_icon="📡", layout="wide")
 
 # --------------------------------------------------------------------------- #
 # Theme - "sodium instrument": warm ink + bone, a single restrained amber
@@ -190,7 +190,7 @@ st.markdown(
     """
     <div class="hud-header">
       <div class="hud-left">
-        <div class="hud-brand">Factory Pulse<span class="reg">®</span></div>
+        <div class="hud-brand">Urban Sensor Monitor<span class="reg">®</span></div>
         <div class="hud-sub">Sensor-fleet health monitor &nbsp;·&nbsp; Melbourne pedestrian network</div>
       </div>
       <div class="hud-right">
@@ -319,9 +319,9 @@ with tab_table:
 
     c1, c2 = st.columns(2)
     c1.download_button("⬇ Download CSV", show.to_csv(index=False).encode(),
-                       file_name="factory_pulse_issues.csv", mime="text/csv")
+                       file_name="urban_sensor_monitor_issues.csv", mime="text/csv")
     c2.download_button("⬇ Download Excel", to_excel_bytes(show),
-                       file_name="factory_pulse_issues.xlsx",
+                       file_name="urban_sensor_monitor_issues.xlsx",
                        mime="application/vnd.openxmlformats-officedocument."
                             "spreadsheetml.sheet")
 

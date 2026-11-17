@@ -1,4 +1,4 @@
-# Factory Pulse API — self-contained deploy dependencies (lean: no Streamlit,
+# Urban Sensor Monitor API - self-contained deploy dependencies (lean: no Streamlit,
 # matplotlib, jupyter — the API doesn't need them). Used by the Dockerfile.
 fastapi==0.116.1
 starlette==0.47.2          # pinned so it also satisfies Streamlit locally (>=0.46)
