@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Urban Sensor Monitor</title>
+<meta name="description" content="A spatial-intelligence platform that monitors the health of a sensor fleet, built on the City of Melbourne pedestrian network." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0b0c0f; --surface:#131419; --surface-2:#171922;
+    --line:rgba(236,231,219,.11); --line-2:rgba(236,231,219,.22);
+    --ink:#ece7db; --muted:rgba(236,231,219,.56); --faint:rgba(236,231,219,.32);
+    --coral:#f0611f; --ok:#8ea96a; --fault:#e0473f;
+    --serif:'Fraunces',Georgia,serif;
+    --display:'Space Grotesk',system-ui,sans-serif;
+    --sans:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); line-height:1.65;
+    -webkit-font-smoothing:antialiased; font-variant-numeric:tabular-nums;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+  .label{font-family:var(--display); font-size:.62rem; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--coral); font-weight:500;}
+  .muted{color:var(--muted);}
+  h1,h2,h3{font-family:var(--serif); font-weight:400; line-height:1.05; letter-spacing:-.01em;}
+
+  /* top bar */
+  .top{position:sticky; top:0; z-index:10; backdrop-filter:blur(8px);
+    background:rgba(11,12,15,.72); border-bottom:1px solid var(--line);}
+  .top .wrap{display:flex; align-items:center; justify-content:space-between; height:58px;}
+  .mono-mark{font-family:var(--display); font-weight:700; color:var(--coral); letter-spacing:.04em;}
+  .top nav a{font-family:var(--display); font-size:.72rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); text-decoration:none; margin-left:22px;}
+  .top nav a:hover{color:var(--ink);}
+  @media(max-width:680px){ .top nav{display:none;} }
+
+  /* hero */
+  .hero{padding:72px 0 40px;}
+  .hero h1{font-size:clamp(2.6rem,7vw,4.6rem); font-style:italic; margin:.3em 0 .25em;}
+  .hero .lede{font-size:1.12rem; max-width:40ch; color:var(--ink);}
+  .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:28px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--display);
+    font-size:.82rem; letter-spacing:.03em; text-decoration:none; padding:11px 20px;
+    border:1px solid var(--line-2); border-radius:2px; transition:all .18s ease;}
+  .btn.primary{background:var(--coral); color:#120a05; border-color:var(--coral); font-weight:600;}
+  .btn.primary:hover{background:#ff7a3c; border-color:#ff7a3c;}
+  .btn.ghost:hover{border-color:var(--ink); background:rgba(236,231,219,.04);}
+  .cold{font-size:.72rem; color:var(--faint); margin-top:12px; font-family:var(--display); letter-spacing:.04em;}
+
+  .shot{width:100%; display:block; border:1px solid var(--line); border-radius:3px;}
+  .hero-shot{margin-top:44px;}
+  figure{margin:0;}
+  figcaption{font-family:var(--display); font-size:.66rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--faint); margin-top:10px;}
+
+  /* sections */
+  section{padding:54px 0; border-top:1px solid var(--line);}
+  section h2{font-size:clamp(1.7rem,4vw,2.3rem); font-style:italic; margin:.4em 0 .6em;}
+  .lead-p{font-size:1.06rem; max-width:62ch; color:var(--ink);}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:26px; margin-top:8px;}
+  @media(max-width:760px){ .grid2{grid-template-columns:1fr;} }
+
+  .pipe{font-family:var(--display); font-size:.86rem; letter-spacing:.02em; color:var(--muted);
+    background:var(--surface); border:1px solid var(--line); border-radius:3px;
+    padding:18px 20px; overflow-x:auto; white-space:nowrap;}
+  .pipe b{color:var(--coral); font-weight:600;}
+
+  /* stat row */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:3px; overflow:hidden; margin-top:6px;}
+  @media(max-width:680px){ .stats{grid-template-columns:repeat(2,1fr);} }
+  .stat{background:var(--bg); padding:22px 20px;}
+  .stat .n{font-family:var(--serif); font-size:2.1rem; line-height:1;}
+  .stat .n.coral{color:var(--coral);}
+  .stat .k{font-family:var(--display); font-size:.62rem; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--muted); margin-top:8px;}
+
+  /* screens list */
+  .screens{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:4px;}
+  @media(max-width:760px){ .screens{grid-template-columns:1fr;} }
+  .screen{border:1px solid var(--line); border-radius:3px; padding:20px 22px; background:var(--surface);}
+  .screen .num{font-family:var(--display); color:var(--coral); font-size:.72rem; letter-spacing:.2em;}
+  .screen h3{font-size:1.2rem; margin:8px 0 6px;}
+  .screen p{font-size:.92rem; color:var(--muted); margin:0;}
+
+  /* table */
+  table{width:100%; border-collapse:collapse; margin-top:10px; font-size:.92rem;}
+  th,td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--line);}
+  th{font-family:var(--display); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); font-weight:500;}
+  td.v{font-family:var(--display); color:var(--ok);}
+
+  /* tech chips */
+  .chips{display:flex; flex-wrap:wrap; gap:9px; margin-top:6px;}
+  .chip{font-family:var(--display); font-size:.78rem; letter-spacing:.02em;
+    border:1px solid var(--line-2); border-radius:2px; padding:7px 13px; color:var(--muted);}
+
+  footer{border-top:1px solid var(--line); padding:44px 0 60px; color:var(--muted); font-size:.9rem;}
+  footer a{color:var(--coral); text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  .note{font-size:.82rem; color:var(--faint); margin-top:18px; max-width:62ch;}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <span class="mono-mark">USM</span>
+  <nav>
+    <a href="#what">What it does</a>
+    <a href="#results">Results</a>
+    <a href="#tech">Tech</a>
+    <a href="https://urban-sensor-monitor.onrender.com">Live demo</a>
+  </nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="label">Urban Sensor Monitor / Case study</div>
+  <h1>Urban Observatory</h1>
+  <p class="lede">A spatial-intelligence platform that watches the health of a sensor fleet, flags the ones that have gone silent or started lying, and maps it in real time.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://urban-sensor-monitor.onrender.com">View live demo &rarr;</a>
+    <a class="btn ghost" href="https://github.com/SaniMah/Urban_Sensor_Monitor">View the code</a>
+  </div>
+  <p class="cold">The live demo runs on a free tier that sleeps when idle, so the first load can take around 50 seconds to wake.</p>
+
+  <figure class="hero-shot">
+    <img class="shot" src="assets/observatory.jpg" alt="The Observatory screen: a map of Melbourne with sensors coloured by health." />
+    <figcaption>01 / Observatory - the whole fleet on one map, most critical sensors annotated</figcaption>
+  </figure>
+</div></header>
+
+<section id="problem"><div class="wrap">
+  <div class="label">The problem</div>
+  <h2>A fleet of sensors is only useful if you can trust it.</h2>
+  <p class="lead-p">An organisation running hundreds of sensors (pedestrian counters, factory-floor IoT, environmental monitors) needs to know every day which ones are healthy and which are silent or wrong. A sensor that has died, frozen on one value, or is reporting impossible numbers quietly corrupts every dashboard and decision downstream. Checking hundreds by hand does not scale. Urban Sensor Monitor screens the whole fleet automatically, flags the unhealthy sensors with evidence, and summarises the week for the people who act on it.</p>
+</div></section>
+
+<section id="what"><div class="wrap">
+  <div class="label">What it does</div>
+  <h2>From raw counts to a ranked list of faults.</h2>
+  <div class="pipe">Melbourne API&nbsp; <b>&rarr;</b> &nbsp;ingest&nbsp; <b>&rarr;</b> &nbsp;PostgreSQL (Neon)&nbsp; <b>&rarr;</b> &nbsp;baseline per slot&nbsp; <b>&rarr;</b> &nbsp;detect (5 rules)&nbsp; <b>&rarr;</b> &nbsp;FastAPI&nbsp; <b>&rarr;</b> &nbsp;React UI&nbsp; <b>+</b> &nbsp;precision / recall&nbsp; <b>+</b> &nbsp;local-LLM report</div>
+  <div class="screens">
+    <div class="screen"><div class="num">01</div><h3>Observatory</h3><p>An interactive map of the whole fleet, sensors coloured by health, with the most critical nodes pre-annotated and any node clickable for a contextual panel.</p></div>
+    <div class="screen"><div class="num">02</div><h3>Sensor Intelligence</h3><p>Single-sensor investigation: an interactive hourly time-series with outage and flat-line overlays, detection stats, a locator and linked incidents.</p></div>
+    <div class="screen"><div class="num">03</div><h3>Incident Explorer</h3><p>An operational workspace: filter and search, severity, expandable detail, CSV / XLSX export, and jump-to-sensor.</p></div>
+    <div class="screen"><div class="num">04</div><h3>Intelligence Reports</h3><p>A weekly health report written from the numbers by a local language model, with a template fallback and a rendered preview.</p></div>
+  </div>
+</div></section>
+
+<section id="results"><div class="wrap">
+  <div class="label">Results &amp; proof</div>
+  <h2>Real findings on live Melbourne data.</h2>
+  <p class="lead-p">Run over six months of the City of Melbourne pedestrian network (around 433,000 readings across 100 reporting sensors):</p>
+  <div class="stats">
+    <div class="stat"><div class="n coral">4,092</div><div class="k">Outages detected</div></div>
+    <div class="stat"><div class="n coral">167 h</div><div class="k">Longest outage (Collins Place S)</div></div>
+    <div class="stat"><div class="n">10</div><div class="k">Flat-lined sensors</div></div>
+    <div class="stat"><div class="n">134</div><div class="k">Sensors monitored</div></div>
+  </div>
+
+  <h3 style="margin-top:40px; font-size:1.3rem;">The detectors are measured, not asserted.</h3>
+  <p class="lead-p">Twelve known issues were injected into a clean synthetic dataset and scored by interval and timestamp match. Every injected issue was found, with zero false positives.</p>
+  <table>
+    <thead><tr><th>Rule</th><th>Precision</th><th>Recall</th></tr></thead>
+    <tbody>
+      <tr><td>Outage</td><td class="v">1.00</td><td class="v">1.00</td></tr>
+      <tr><td>Flat-line</td><td class="v">1.00</td><td class="v">1.00</td></tr>
+      <tr><td>Impossible value</td><td class="v">1.00</td><td class="v">1.00</td></tr>
+      <tr><td>Duplicate</td><td class="v">1.00</td><td class="v">1.00</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Off-baseline is a tunable "unusual reading" flag validated on real data, not scored here, since "unusual but real" has no crisp ground truth.</p>
+
+  <div class="grid2" style="margin-top:40px;">
+    <figure>
+      <img class="shot" src="assets/sensor-intelligence.jpg" alt="Sensor Intelligence screen: hourly time-series with outage overlays." />
+      <figcaption>02 / Sensor Intelligence</figcaption>
+    </figure>
+    <figure>
+      <img class="shot" src="assets/incidents.jpg" alt="Incident Explorer screen: a filterable table of detected faults." />
+      <figcaption>03 / Incident Explorer</figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<section id="tech"><div class="wrap">
+  <div class="label">Architecture &amp; tech</div>
+  <h2>A decoupled frontend over a reused analytical core.</h2>
+  <p class="lead-p">A FastAPI layer sits over the existing Python analysis, so no business logic is duplicated. The React frontend is fully decoupled and talks to it over HTTP; in production a single Docker image builds the frontend and runs the API that serves it, from one URL with no CORS.</p>
+  <div class="chips">
+    <span class="chip">Python / pandas / NumPy</span>
+    <span class="chip">PostgreSQL on Neon</span>
+    <span class="chip">SQLAlchemy</span>
+    <span class="chip">FastAPI</span>
+    <span class="chip">React + TypeScript</span>
+    <span class="chip">Vite + Tailwind</span>
+    <span class="chip">Leaflet (Esri basemaps)</span>
+    <span class="chip">Apache ECharts</span>
+    <span class="chip">Local LLM (Ollama)</span>
+    <span class="chip">Docker / Render</span>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="label">Urban Sensor Monitor</div>
+  <p style="margin-top:12px;">
+    <a href="https://urban-sensor-monitor.onrender.com">Live demo</a> &nbsp;/&nbsp;
+    <a href="https://github.com/SaniMah/Urban_Sensor_Monitor">Source code</a>
+  </p>
+  <p style="margin-top:14px;">Portfolio project by <strong style="color:var(--ink);">Sanithma</strong>, Mechatronics Engineering &amp; Computer Science, Monash University. Data: City of Melbourne Pedestrian Counting System, under the City of Melbourne open-data licence.</p>
+  <p class="note">AI tools were used to help revise the code and documentation; all logic and results were reviewed and tested.</p>
+</div></footer>
+
+</body>
+</html>
