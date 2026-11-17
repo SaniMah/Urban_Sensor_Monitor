@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 @import 'tailwindcss';
 
 /* ========================================================================
    URBAN SENSOR MONITOR // OBSERVATORY - design system
    Charcoal + warm ink · one coral signal · sage healthy · red fault.
-   Editorial display (Space Grotesk) x UI sans (Inter) x mono (JetBrains).
+   Editorial serif headlines (Fraunces) x display + labels (Space Grotesk) x UI sans (Inter).
    ======================================================================== */
 :root{
   --bg:#0b0c0f;
@@ -24,7 +24,8 @@
   --display:'Space Grotesk',sans-serif;
   --serif:'Fraunces','Space Grotesk',serif;   /* editorial masthead */
   --sans:'Inter',system-ui,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,monospace;
+  /* small technical labels: a clean tracked sans, with aligned figures */
+  --mono:'Space Grotesk',system-ui,sans-serif;
 }
 
 /* ---- warm-white "Observation Plate" theme (Observatory only) ---- */
@@ -72,14 +73,14 @@ body{
 
 /* typographic primitives */
 .font-display{font-family:var(--display);}
-.font-mono{font-family:var(--mono);}
+.font-mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
 .tracked{letter-spacing:.22em;text-transform:uppercase;}
 .tracked-sm{letter-spacing:.14em;text-transform:uppercase;}
 
 /* reusable bits */
 .hair{border-color:var(--line);}
 .label{font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--muted);}
+  text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums;}
 .bracket{color:var(--coral);}
 
 .grid-bg{
