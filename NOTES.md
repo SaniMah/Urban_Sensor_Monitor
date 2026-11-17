@@ -220,7 +220,7 @@ Run with `pytest -q`. (Also fixed a pandas deprecation: `dayofweek` ->
 **README:** written as a consulting case - problem, who it's for, what it does,
 **real findings** (4,092 outages incl. a 167-hour one; the precision/recall
 table), tech/schema, how to run, testing, honest limitations, data & licence,
-and the AI-assistance note. Embeds the seasonal-profile figure.
+and a brief project note. Embeds the seasonal-profile figure.
 
 **Status:** Urban Sensor Monitor is feature-complete and submission-ready - it mirrors
 the CAN Log Analyser method (ingest -> DB -> baseline -> detection -> evaluation ->
